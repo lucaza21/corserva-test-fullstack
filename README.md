@@ -1,6 +1,8 @@
-# Corserva Test Backend
+# Corserva FullStack Backend
 
-This repository contains the backend for the Corserva technical test. The backend is built with Node.js, Express, TypeScript, Sequelize, and PostgreSQL.
+This repository contains the backend+frontend for the Corserva technical test. 
+The backend is built with Node.js, Express, TypeScript, Sequelize, and PostgreSQL.
+The frontend is build with Vite@React and Tailwind.
 Docker Compose is used to set up and run the application and its dependencies.
 
 ## Prerequisites

@@ -1,0 +1,40 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - "corserva-back/**"
+  pull_request:
+    paths:
+      - "corserva-back/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: database_development
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        working-directory: ./corserva-back
+        run: npm install
+
+      - name: Build the frontend
+        working-directory: ./corserva-back
+        run: npm run build

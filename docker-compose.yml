@@ -1,0 +1,49 @@
+services:
+  db:
+    container_name: postgresDB
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=database_development
+    ports:
+      - '5432:5432'
+    volumes: 
+      - ./corserva-back/src/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    container_name: Node_api
+    build:
+      context: ./corserva-back
+      dockerfile: ./Dockerfile
+    image: dockerfile
+    depends_on:
+      - db
+    ports:
+      - 3030:3030
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: database_development
+    links:
+      - db
+    volumes:
+      - './:/src'
+
+  client:
+    container_name: client_React
+    build:
+      context: ./corserva-front
+      dockerfile: ./Dockerfile
+    volumes:
+        - /app/node_modules
+        - ./corserva-front:/app
+    ports:
+        - "5173:5173"
+      
+volumes:
+  db:
+    driver: local

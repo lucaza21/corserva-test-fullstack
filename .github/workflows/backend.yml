@@ -35,6 +35,6 @@ jobs:
         working-directory: ./corserva-back
         run: npm install
 
-      - name: Build the frontend
+      - name: run backend
         working-directory: ./corserva-back
-        run: npm run build
+        run: npm run dev
